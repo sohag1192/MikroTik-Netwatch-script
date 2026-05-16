@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netwatch Telegram Script Generator</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            color: #e2e8f0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .container {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 800px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+            color: #94a3b8;
+        }
+
+        input {
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #38bdf8;
+            box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+        }
+
+        .btn-generate {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #2563eb, #4f46e5);
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-generate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -10px rgba(79, 70, 229, 0.6);
+        }
+
+        .output-wrapper {
+            position: relative;
+        }
+
+        textarea {
+            width: 100%;
+            height: 200px;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            color: #10b981;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            resize: vertical;
+            outline: none;
+        }
+
+        .btn-copy {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #334155;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: background 0.3s;
+        }
+
+        .btn-copy:hover {
+            background: #475569;
+        }
+
+        @media (max-width: 600px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Netwatch Script Generator</h2>
+        
+        <div class="form-grid">
+            <div class="form-group">
+                <label>Host IP Address</label>
+                <input type="text" id="ipAddress" placeholder="192.168.13.46">
+            </div>
+            <div class="form-group">
+                <label>Comment / English Name</label>
+                <input type="text" id="engName" placeholder="LIMON JAMTOIL">
+            </div>
+            <div class="form-group full-width">
+                <label>Bengali Location Name (For Telegram)</label>
+                <input type="text" id="benName" placeholder="লিমন জামতৈল">
+            </div>
+            <div class="form-group">
+                <label>Bot Token</label>
+                <input type="text" id="botId" value="7196063280:AAFhAgYxnKcOl7_yW7aIfYBifwqZDdTkQRI">
+            </div>
+            <div class="form-group">
+                <label>Chat ID</label>
+                <input type="text" id="chatId" value="-1002789369209">
+            </div>
+        </div>
+
+        <button class="btn-generate" onclick="generateScript()">Generate Script</button>
+
+        <div class="output-wrapper">
+            <button class="btn-copy" onclick="copyToClipboard()">Copy Code</button>
+            <textarea id="outputScript" readonly placeholder="Your generated MikroTik script will appear here..."></textarea>
+        </div>
+    </div>
+
+    <script>
+        function generateScript() {
+            const ip = document.getElementById('ipAddress').value.trim();
+            const engName = document.getElementById('engName').value.trim();
+            const benName = document.getElementById('benName').value.trim();
+            const botId = document.getElementById('botId').value.trim();
+            const chatId = document.getElementById('chatId').value.trim();
+
+            if (!ip || !engName || !benName) {
+                alert('Please fill in the IP Address, English Name, and Bengali Name.');
+                return;
+            }
+
+            // Encode the Bengali name for the URL
+            const encBenName = encodeURIComponent(benName);
+            
+            // Reconstruct the encoded Host Status dynamically based on input
+            const hostStatusUp = `%E2%9C%85%20%E0%A6%B2%E0%A6%BF%E0%A6%82%E0%A6%95%20%E0%A6%86%E0%A6%AA%0A%0A` + encBenName;
+            const hostStatusDown = `%E2%9D%8C%20%E0%A6%B2%E0%A6%BF%E0%A6%82%E0%A6%95%20%E0%A6%A1%E0%A6%BE%E0%A6%89%E0%A6%A8%0A%0A` + encBenName;
+
+            // Static encoded message bodies to preserve MikroTik variables ($NetHost, etc.) exactly as requested
+            const msgUp = `%E0%A6%B9%E0%A7%8B%E0%A6%B8%E0%A7%8D%E0%A6%9F:%20$NetHost%0A%E0%A6%85%E0%A6%AC%E0%A6%B8%E0%A7%8D%E0%A6%A5%E0%A6%BE:%20$HostStatus%0A%0A%E0%A6%B8%E0%A6%AE%E0%A6%AF%E0%A6%BC:%20$CurTime%20$CurDate`;
+            const msgDown = `%E0%A6%B9%E0%A7%8B%E0%A6%B8%E0%A7%8D%E0%A6%9F:%20$NetHost%0A%E0%A6%85%E0%A6%AC%E0%A6%B8%E0%A7%8D%E0%A6%A5%E0%A6%BE:%20$HostStatus%0A%0A%E0%A6%B8%E0%A6%AE%E0%A6%AF%E0%A6%BC:%20$CurTime%20$CurDate%0A%0A%F0%9F%93%8C%20%E0%A6%A6%E0%A7%8D%E0%A6%B0%E0%A6%B7%E0%A7%8D%E0%A6%9F%E0%A6%AC%E0%A7%8D%E0%A6%AF:%20%E0%A7%A7%20%E0%A6%A5%E0%A7%87%E0%A6%95%E0%A7%87%20%E0%A7%AB%20%E0%A6%AE%E0%A6%BF%E0%A6%A8%E0%A6%BF%E0%A6%9F%20%E0%A6%8F%E0%A6%B8%E0%A6%8F%E0%A6%AE%E0%A6%8F%E0%A6%B8%20%E0%A6%86%E0%A6%B8%E0%A6%9B%E0%A7%87%20%E0%A6%A8%E0%A6%BE,%20%E0%A6%A4%E0%A6%BE%E0%A6%B0%E0%A6%AA%E0%A6%B0%20%E0%A6%B2%E0%A6%BF%E0%A6%99%E0%A7%8D%E0%A6%95%E0%A6%9F%E0%A6%BF%20%E0%A6%A1%E0%A6%BE%E0%A6%89%E0%A6%A8%20%E0%A6%B9%E0%A6%AF%E0%A6%BC%E0%A7%87%20%E0%A6%97%E0%A7%87%E0%A6%9B%E0%A7%87%E0%A7%A4`;
+
+            const script = `add host=${ip} type=simple startup-delay=1m comment="${engName}" up-script={
+:local CurDate [/system clock get date] 
+:local CurTime [/system clock get time] 
+:local NetHost $"host"
+:local CHID "${chatId}" 
+:local BotID "${botId}"
+:local HostStatus "${hostStatusUp}"
+:local Message "${msgUp}"
+/tool fetch url="https://api.telegram.org/bot$BotID/sendMessage?chat_id=$CHID&text=$Message" keep-result=no
+} down-script={
+:local CurDate [/system clock get date] 
+:local CurTime [/system clock get time] 
+:local NetHost $"host"
+:local CHID "${chatId}" 
+:local BotID "${botId}"
+:local HostStatus "${hostStatusDown}"
+:local Message "${msgDown}"
+/tool fetch url="https://api.telegram.org/bot$BotID/sendMessage?chat_id=$CHID&text=$Message" keep-result=no
+}`;
+
+            document.getElementById('outputScript').value = script;
+        }
+
+        function copyToClipboard() {
+            const textarea = document.getElementById('outputScript');
+            if (!textarea.value) return;
+            
+            textarea.select();
+            textarea.setSelectionRange(0, 99999); // For mobile devices
+            
+            navigator.clipboard.writeText(textarea.value).then(() => {
+                const btn = document.querySelector('.btn-copy');
+                const originalText = btn.innerText;
+                btn.innerText = 'Copied!';
+                btn.style.background = '#10b981';
+                
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.style.background = '#334155';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
