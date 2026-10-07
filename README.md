@@ -6,10 +6,10 @@
   <img src="https://img.shields.io/badge/Language-HTML5%20%2F%20JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JS" />
   <br/>
   <!-- Visitor & Hit Counters -->
-  <a href="https://github.com/sohag1192/MikroTik-Netwatch-script">
-    <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fsohag1192%2FMikroTik-Netwatch-script&count_bg=%232563EB&title_bg=%231E293B&icon=github.svg&icon_color=%23E2E8F0&title=Total+Hits&edge_flat=false" alt="Total Hits" />
+  <a href="https://hits.sh/github.com/sohag1192/MikroTik-Netwatch-script/">
+    <img src="https://hits.sh/github.com/sohag1192/MikroTik-Netwatch-script.svg?view=today-total&style=flat-square&label=Total+Hits&color=2563eb" alt="Total Hits" />
   </a>
-  <img src="https://komarev.com/ghpvc/?username=sohag1192-mikrotik-netwatch&label=Total+Views&color=2563eb&style=flat-square" alt="Visitors Count" />
+  <img src="https://komarev.com/ghpvc/?username=sohag1192&label=Profile+Views&color=2563eb&style=flat-square" alt="Visitors Count" />
   <img src="https://img.shields.io/github/stars/sohag1192/MikroTik-Netwatch-script?style=flat-square&color=yellow" alt="Stars" />
   <img src="https://img.shields.io/github/forks/sohag1192/MikroTik-Netwatch-script?style=flat-square&color=blue" alt="Forks" />
   <img src="https://img.shields.io/github/license/sohag1192/MikroTik-Netwatch-script?style=flat-square" alt="License" />
@@ -169,8 +169,8 @@ Yes! The syntax generated is 100% compatible with RouterOS v6.x and RouterOS v7.
 
 | Metric | Status |
 | :--- | :--- |
-| **Total Visits / Hits** | ![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fsohag1192%2FMikroTik-Netwatch-script&count_bg=%232563EB&title_bg=%231E293B&icon=github.svg&icon_color=%23E2E8F0&title=hits&edge_flat=false) |
-| **Unique Visitors** | ![Views](https://komarev.com/ghpvc/?username=sohag1192-mikrotik-netwatch&label=views&color=2563eb&style=flat-square) |
+| **Total Visits / Hits** | [![Hits](https://hits.sh/github.com/sohag1192/MikroTik-Netwatch-script.svg?view=today-total&style=flat-square&label=Hits&color=2563eb)](https://hits.sh/github.com/sohag1192/MikroTik-Netwatch-script/) |
+| **Profile Views** | ![Views](https://komarev.com/ghpvc/?username=sohag1192&label=Views&color=2563eb&style=flat-square) |
 | **Maintained By** | [@sohag1192](https://github.com/sohag1192) |
 
 ---
